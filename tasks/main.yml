@@ -1,0 +1,34 @@
+---
+# tasks file for myhaproxy
+- name: "Installing the haproxy"
+  package:
+
+          name: "haproxy"
+          state: present
+
+- name: "updating the haproxy.cfg file"
+  blockinfile:
+
+          path: /etc/haproxy/haproxy.cfg
+          block: |
+                   {% for i in groups['webserver'] %}
+                   server app{{ loop.index }} {{ i }}:80 check
+                   {% endfor %}
+  notify: "restart the service"
+
+- lineinfile:
+        path: /etc/haproxy/haproxy.cfg
+        regexp: "bind *:5000"
+                  # insertafter: "frontend main"
+        line: "bind *:8080"
+  notify: "restart the service"
+
+- firewalld:
+        state: enabled
+        port: 8080/tcp
+        permanent: yes
+
+- service:
+        name: "haproxy"
+        state: started
+
