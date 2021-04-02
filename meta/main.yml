@@ -1,6 +1,6 @@
 galaxy_info:
   author: Jyoti Pawar
-  description: This role along with the apache configuration helps to automatically update the configuration file of haproxy and setup the reverse proxy
+  description: This role along with the apache configuration role helps to automatically update the configuration file of haproxy and setup the reverse proxy
   company: your company (optional)
 
   # If the issue tracker for your role is not on github, uncomment the
